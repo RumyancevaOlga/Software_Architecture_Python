@@ -202,7 +202,7 @@ paths:
       operationId: deleteCloud
       responses:
         "200":
-          description: Успешный ответ добавления информации о системе
+          description: Успешный ответ удаления информации о системе
           content:
             application/json: {}
         "default":
