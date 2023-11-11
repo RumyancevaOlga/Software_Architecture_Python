@@ -1,0 +1,302 @@
+openapi: 3.0.1
+info: 
+  title: Сервис по работе с роботами-пылесосами
+  version: 0.0.1
+servers: 
+  - url: http://localhost:8080/api/v1
+paths:
+  /users:
+    get:
+      summary: Метод получения списка пользователей
+      tags:
+        - Users
+      operationId: getAllUsers
+      responses:
+        "200":
+          description: Успешный ответ со списком пользователей
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Users"
+        "default":
+          description: Все остальное
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Метод добавления нового пользователя в список
+      tags: 
+        - Users
+      operationId: createUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+      responses:
+        "200":
+          description: Успешный ответ добавления нового пользователя
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Users"
+        "default":
+          description: Все остальное
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /users/{idUser}:
+    get:
+      summary: Метод получения пользователя по id
+      tags:
+        - Users
+      operationId: getUserId
+      parameters:
+        - name: idUser
+          in: path
+          required: true
+          description: id user
+          schema: 
+            type: integer
+      responses:
+        "200":
+          description: Успешный ответ получения пользователя по id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "default":
+          description: Все остальное
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      summary: Изменение пользователя по id
+      tags: 
+        - Users
+      operationId: updateUserById
+      parameters:
+        - name: idUser
+          in: path
+          required: true
+          description: id user
+          schema: 
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+      responses:
+        "200":
+          description: Успешный ответ на изменение пользователя по id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "default":
+          description: Все остальное
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Удаление пользователя по id
+      tags:
+        - Users
+      operationId: deleteUserById
+      parameters:
+        - name: idUser
+          in: path
+          required: true
+          description: id user
+          schema: 
+            type: integer
+      responses:
+        "200":
+          description: Успешное удаление пользователя по id
+          content:
+            application/json: {}
+        "default":
+          description: Все остальное
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /robots:
+    get:
+      summary: Метод получения списка пылесосов
+      tags:
+        - Robots
+      operationId: getAllRobots
+      responses:
+        "200":
+          description: Успешный ответ со списком пылесосов
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Robots"
+        "default":
+          description: Все остальное
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Метод добавления нового пылесоса в список
+      tags: 
+        - Robots
+      operationId: createRobot
+      requestBody:
+        required: true
+        content:
+          application/json:
+              schema:
+                $ref: "#/components/schemas/Robot"
+      responses:
+        "200":
+          description: Успешный ответ добавления нового пылесоса
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Robots"
+        "default":
+          description: Все остальное
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /robots/{idRobot}:
+    get:
+      summary: Метод получения пылесоса по id
+      tags:
+        - Robots
+      operationId: getRobotId
+      parameters:
+        - name: idRobot
+          in: path
+          required: true
+          description: id robot
+          schema: 
+            type: integer
+      responses:
+        "200":
+          description: Успешный ответ получения пылесоса по id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Robot"
+        "default":
+          description: Все остальное
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Удаление пылесоса по id
+      tags:
+        - Robots
+      operationId: deleteRobotById
+      parameters:
+        - name: idRobot
+          in: path
+          required: true
+          description: id robot
+          schema: 
+            type: integer
+      responses:
+        "200":
+          description: Успешное удаление пылесоса по id
+          content:
+            application/json: {}
+        "default":
+          description: Все остальное
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    Robot:
+      type: object
+      required:
+        - id
+        - model
+        - version
+        - status
+        - resources
+        - fabric_name
+        - ip_address
+        - id_user_group
+      properties:
+        id:
+          type: integer
+          example: 1
+        model:
+          type: string
+          example: model a
+        version:
+          type: string
+          example: ab1.1.0
+        status:
+          type: string
+          example: worked
+        resources:
+          type: integer
+          example: 24
+        fabric_name: 
+          type: string
+          example: robot 1
+        ip_address:
+          type: string
+          example: 192.168.0.0.1
+        id_user_group:
+          type: integer
+          example: 1
+    Robots:
+      type: array
+      items:
+        $ref: "#/components/schemas/Robot"
+    User:
+      type: object
+      required:
+        - id
+        - login
+        - hash
+        - email
+      properties:
+        id:
+          type: integer
+          example: 1
+        login:
+          type: string
+          example: login
+        hash:
+          type: integer
+          example: 123454
+        email:
+          type: string
+          example: login@mail.ru
+    Users:
+      type: array
+      items:
+        $ref: "#/components/schemas/User"
+    Error:
+      type: object
+      required:
+        - codeError
+        - messageError
+      properties:
+        codeError:
+          type: string
+          example: 123f456
+          description: Код ошибки
+        messageError:
+          type: string
+          example: error
+          description: Сообщение об ошибке
